@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petal Haven Flower Shop</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="theme-color" content="#2b1b21">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="is-guest">
+
+    <div id="message" role="status" aria-live="polite"></div>
+
+    <!-- ========== LOGIN / REGISTER ========== -->
+    <main class="auth-shell" id="auth-shell">
+        <div class="auth-card">
+            <div class="auth-form-side">
+
+                <section id="login-section">
+                    <p class="brand-script">Petal Haven</p>
+                    <p class="brand-sub">Flower shop management</p>
+
+                    <h1 class="auth-title">Hello <strong>Petal Haven!</strong></h1>
+                    <p class="auth-lead">Sign in to manage today's blooms.</p>
+
+                    <form id="login-form">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required autocomplete="email" placeholder="you@petalhaven.com">
+
+                        <label for="login-password">Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="login-password" required autocomplete="current-password" placeholder="Enter your password">
+                            <button type="button" class="link-btn toggle-pass" data-target="login-password" aria-label="Show password">Show</button>
+                        </div>
+
+                        <div class="auth-row">
+                            <label class="check"><input type="checkbox" id="remember-me"> Remember me</label>
+                            <button type="button" class="link-btn" id="forgot-password">Forgot password?</button>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Sign in</button>
+                    </form>
+
+                    <p class="auth-switch">New to the team? <button type="button" class="link-btn" id="show-register">Create an account</button></p>
+                </section>
+
+                <section id="register-section" class="hidden">
+                    <p class="brand-script">Petal Haven</p>
+                    <p class="brand-sub">Flower shop management</p>
+
+                    <h1 class="auth-title">Create <strong>staff account</strong></h1>
+                    <p class="auth-lead">Use at least 8 characters for your password.</p>
+
+                    <form id="register-form">
+                        <label for="register-name">Full name</label>
+                        <input type="text" id="register-name" required autocomplete="name">
+
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required autocomplete="email">
+
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" minlength="8" required autocomplete="new-password">
+
+                        <button type="submit" class="btn-primary">Create account</button>
+                    </form>
+
+                    <p class="auth-switch">Already registered? <button type="button" class="link-btn" id="show-login">Back to sign in</button></p>
+                </section>
+            </div>
+
+            <!-- The rose: the one decorative moment -->
+            <div class="auth-art" aria-hidden="true">
+                <svg viewBox="-100 -100 200 200" class="rose">
+                    <defs>
+                        <radialGradient id="pt" cx="50%" cy="40%" r="65%">
+                            <stop offset="0" stop-color="#fbd9de"/><stop offset="1" stop-color="#e58f9f"/>
+                        </radialGradient>
+                    </defs>
+                    <g fill="url(#pt)" stroke="#c9677b" stroke-width="1.2">
+                        <ellipse rx="92" ry="70" transform="rotate(0)"/>
+                        <ellipse rx="92" ry="70" transform="rotate(72)"/>
+                        <ellipse rx="92" ry="70" transform="rotate(144)"/>
+                        <ellipse rx="92" ry="70" transform="rotate(216)"/>
+                        <ellipse rx="92" ry="70" transform="rotate(288)"/>
+                        <ellipse rx="64" ry="48" transform="rotate(36)"/>
+                        <ellipse rx="64" ry="48" transform="rotate(108)"/>
+                        <ellipse rx="64" ry="48" transform="rotate(180)"/>
+                        <ellipse rx="64" ry="48" transform="rotate(252)"/>
+                        <ellipse rx="64" ry="48" transform="rotate(324)"/>
+                        <circle r="34"/>
+                    </g>
+                    <path d="M0 0c6-2 10 3 7 8-4 7-16 5-18-4-3-12 10-22 24-17 17 6 18 30 2 38" fill="none" stroke="#b4546a" stroke-width="2.4" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========== DASHBOARD ========== -->
+    <div id="dashboard-section" class="app hidden">
+
+        <aside class="sidebar" id="sidebar">
+            <a href="#dashboard-home" class="sidebar-brand" aria-label="Petal Haven, go to dashboard">
+                <p class="brand-script">Petal Haven</p>
+                <p class="brand-sub">Flower shop management</p>
+            </a>
+
+            <nav aria-label="Main navigation">
+                <p class="nav-group">Overview</p>
+                <a href="#dashboard-home" data-view="dashboard-home">Dashboard</a>
+
+                <p class="nav-group">Shop</p>
+                <a href="#orders-section" data-view="orders-section">Flower orders <span class="nav-count hidden" id="nav-pending"></span></a>
+                <a href="#add-order-section" data-view="add-order-section">New order</a>
+                <a href="#customers-section" data-view="customers-section">Customers</a>
+
+                <p class="nav-group">Insights</p>
+                <a href="#sales-section" data-view="sales-section">Sales report</a>
+                <a href="#weather-section" data-view="weather-section">Weather</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="user-box">
+                    <span class="avatar" id="user-avatar" aria-hidden="true">P</span>
+                    <p id="user-info" class="user-chip">Signed in</p>
+                </div>
+                <button type="button" id="logout-button" class="btn-ghost">Log out</button>
+            </div>
+        </aside>
+        <div class="scrim" id="scrim"></div>
+
+        <div class="content">
+            <header class="topbar">
+                <button type="button" class="menu-btn" id="menu-button" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">Menu</button>
+                <div>
+                    <h1 id="page-title">Dashboard</h1>
+                    <p id="page-date" class="muted"></p>
+                </div>
+            </header>
+
+            <!-- DASHBOARD HOME -->
+            <section class="view" id="dashboard-home">
+                <h2 class="greeting" id="greeting">Welcome back</h2>
+
+                <div class="stat-grid">
+                    <article class="stat stat-hero">
+                        <p class="stat-label">Total sales</p>
+                        <p class="stat-value" id="stat-sales">₱0.00</p>
+                        <p class="stat-note" id="stat-sales-note">&nbsp;</p>
+                    </article>
+                    <article class="stat">
+                        <p class="stat-label">Orders</p>
+                        <p class="stat-value" id="stat-orders">0</p>
+                        <p class="stat-note" id="stat-month">&nbsp;</p>
+                    </article>
+                    <article class="stat">
+                        <p class="stat-label">Customers</p>
+                        <p class="stat-value" id="stat-customers">0</p>
+                        <p class="stat-note">Registered</p>
+                    </article>
+                    <article class="stat">
+                        <p class="stat-label">Pending</p>
+                        <p class="stat-value" id="stat-pending">0</p>
+                        <p class="stat-note">Need attention</p>
+                    </article>
+                </div>
+
+                <div class="dash-grid">
+                    <article class="panel">
+                        <h2>Sales, last 14 days</h2>
+                        <p class="muted" id="chart-summary"></p>
+                        <div id="sales-chart" class="chart"></div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-head">
+                            <h2>Today's weather</h2>
+                            <a href="#weather-section" class="link-btn">Change city</a>
+                        </div>
+                        <p id="dw-message" class="muted">Loading weather...</p>
+                        <div id="dw-result" class="hidden">
+                            <p class="muted" id="dw-location"></p>
+                            <div class="weather-main">
+                                <img id="dw-icon" src="" alt="">
+                                <p id="dw-temp" class="dw-temp"></p>
+                            </div>
+                            <p id="dw-condition" class="dw-condition"></p>
+                            <p class="muted" id="dw-extra"></p>
+                            <div class="flower-tip">
+                                <h3>Flower care tip</h3>
+                                <p id="dw-tip"></p>
+                            </div>
+                            <p class="weather-attribution">Weather data provided by
+                                <a href="https://www.weatherapi.com/" target="_blank" rel="noopener noreferrer">WeatherAPI.com</a></p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="dash-grid flip">
+                    <article class="panel">
+                        <h2>Order status</h2>
+                        <div id="status-breakdown" class="breakdown"></div>
+                        <h2 class="sub-h">Best sellers</h2>
+                        <ol id="top-flowers" class="top-list"></ol>
+                    </article>
+
+                    <article class="panel">
+                    <div class="panel-head">
+                        <h2>Recent orders</h2>
+                        <a href="#orders-section" class="link-btn">View all orders</a>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr><th>Order</th><th>Customer</th><th>Flower</th><th>Total</th><th>Date</th><th>Status</th></tr>
+                            </thead>
+                            <tbody id="recent-orders"></tbody>
+                        </table>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <!-- FLOWER ORDERS -->
+            <section class="view hidden" id="orders-section">
+                <article class="panel">
+                    <div class="filters">
+                        <div>
+                            <label for="order-search">Search orders</label>
+                            <input type="search" id="order-search" placeholder="Order ID, customer, or flower">
+                        </div>
+                        <div>
+                            <label for="status-filter">Status</label>
+                            <select id="status-filter">
+                                <option value="">All</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="payment-filter">Payment</label>
+                            <select id="payment-filter">
+                                <option value="">All</option>
+                                <option value="Cash">Cash</option>
+                                <option value="GCash">GCash</option>
+                                <option value="Card">Card</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="type-filter">Order type</label>
+                            <select id="type-filter">
+                                <option value="">All</option>
+                                <option value="Walk-in">Walk-in</option>
+                                <option value="Delivery">Delivery</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th><th>Customer</th><th>Email</th><th>Flower</th>
+                                    <th>Qty</th><th>Total</th><th>Date</th><th>Payment</th><th>Type</th><th>Status</th><th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table">
+                                <tr><td colspan="11">Loading orders...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <!-- ADD NEW ORDER -->
+            <section class="view hidden" id="add-order-section">
+                <div class="split">
+                    <article class="panel">
+                        <h2>Customer details</h2>
+                        <div id="order-cust" class="cc"></div>
+                    </article>
+
+                    <article class="panel">
+                    <h2>New flower order</h2>
+                    <form id="order-form" class="form-grid">
+                        <div class="span-2">
+                            <label for="customer-id">Customer</label>
+                            <select id="customer-id" required><option value="">Loading customers...</option></select>
+                        </div>
+                        <div>
+                            <label for="flower-kind">Kind of flower</label>
+                            <select id="flower-kind" required>
+                                <option value="">Select a flower</option>
+                                <optgroup label="Roses">
+                                    <option>Red Roses</option>
+                                    <option>Pink Roses</option>
+                                    <option>White Roses</option>
+                                </optgroup>
+                                <optgroup label="Other blooms">
+                                    <option>Sunflower</option>
+                                    <option>Pink Tulips</option>
+                                    <option>White Lily</option>
+                                    <option>Orchids</option>
+                                    <option>Carnations</option>
+                                    <option>Daisies</option>
+                                    <option>Gerberas</option>
+                                </optgroup>
+                                <optgroup label="Mixed">
+                                    <option>Mixed Flower</option>
+                                </optgroup>
+                                <option value="Other">Other (type your own)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="flower-style">Arrangement</label>
+                            <select id="flower-style" required>
+                                <option>Bouquet</option>
+                                <option>Arrangement</option>
+                                <option>Basket</option>
+                                <option>Single stem</option>
+                            </select>
+                        </div>
+                        <div class="span-2 hidden" id="flower-other-wrap">
+                            <label for="flower-other">Flower name</label>
+                            <input type="text" id="flower-other" placeholder="Baby's breath">
+                        </div>
+                        <div>
+                            <label for="quantity">Quantity</label>
+                            <input type="number" id="quantity" min="1" step="1" required>
+                        </div>
+                        <div>
+                            <label for="total-price">Total price (₱)</label>
+                            <input type="number" id="total-price" min="0.01" step="0.01" required>
+                        </div>
+                        <div>
+                            <label for="order-date">Order date</label>
+                            <input type="date" id="order-date" required>
+                        </div>
+                        <div>
+                            <label for="order-status">Status</label>
+                            <select id="order-status" required>
+                                <option value="Pending">Pending</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="order-payment">Payment method</label>
+                            <select id="order-payment" required>
+                                <option value="Cash">Cash</option>
+                                <option value="GCash">GCash</option>
+                                <option value="Card">Card</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="order-type">Order type</label>
+                            <select id="order-type" required>
+                                <option value="Walk-in">Walk-in</option>
+                                <option value="Delivery">Delivery</option>
+                            </select>
+                        </div>
+                        <div class="span-2"><button type="submit" class="btn-primary">Add order</button></div>
+                    </form>
+                </article>
+                </div>
+            </section>
+
+            <!-- CUSTOMERS -->
+            <section class="view hidden" id="customers-section">
+                <div class="split">
+                    <article class="panel">
+                        <h2>Customer details</h2>
+                        <div id="cust-view" class="cc"></div>
+                    </article>
+
+                    <article class="panel">
+                    <h2 id="customer-form-title">Add customer</h2>
+                    <form id="customer-form" class="form-grid">
+                        <div>
+                            <label for="cust-name">Full name</label>
+                            <input type="text" id="cust-name" required autocomplete="off">
+                        </div>
+                        <div>
+                            <label for="cust-email">Email</label>
+                            <input type="email" id="cust-email" required autocomplete="off">
+                        </div>
+                        <div>
+                            <label for="cust-phone">Phone</label>
+                            <input type="tel" id="cust-phone" required autocomplete="off" inputmode="numeric" maxlength="11" pattern="[0-9]{11}" placeholder="09123456789">
+                        </div>
+                        <div>
+                            <label for="cust-address">Address</label>
+                            <input type="text" id="cust-address" required autocomplete="off">
+                        </div>
+                        <div class="span-2 btn-row">
+                            <button type="submit" class="btn-primary" id="customer-submit">Add customer</button>
+                            <button type="button" class="btn-ghost hidden" id="customer-cancel">Cancel</button>
+                        </div>
+                    </form>
+                </article>
+                </div>
+
+                <article class="panel">
+                    <div class="panel-head">
+                        <h2>All customers</h2>
+                        <p class="muted" id="customer-count"></p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="customers-table"><tr><td colspan="6">Loading customers...</td></tr></tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <!-- SALES REPORT -->
+            <section class="view hidden" id="sales-section">
+                <div class="stat-grid four">
+                    <article class="stat"><p class="stat-label">All-time sales</p><p class="stat-value" id="rep-total">₱0.00</p><p class="stat-note">All orders</p></article>
+                    <article class="stat"><p class="stat-label">This month</p><p class="stat-value" id="rep-month">₱0.00</p><p class="stat-note" id="rep-month-note">&nbsp;</p></article>
+                    <article class="stat"><p class="stat-label">Average order</p><p class="stat-value" id="rep-avg">₱0.00</p><p class="stat-note">Per order</p></article>
+                    <article class="stat"><p class="stat-label">Flowers sold</p><p class="stat-value" id="rep-qty">0</p><p class="stat-note">Total quantity</p></article>
+                </div>
+
+                <div class="dash-grid even">
+                    <article class="panel">
+                        <h2>Sales by month</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>Month</th><th>Orders</th><th>Sales</th></tr></thead>
+                                <tbody id="rep-months"></tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article class="panel">
+                        <h2>Sales by flower</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>Flower</th><th>Sold</th><th>Sales</th></tr></thead>
+                                <tbody id="rep-flowers"></tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="dash-grid even">
+                    <article class="panel">
+                        <h2>Sales by payment method</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>Method</th><th>Orders</th><th>Sales</th></tr></thead>
+                                <tbody id="rep-payments"></tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <article class="panel">
+                        <h2>Walk-in vs delivery</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead><tr><th>Type</th><th>Orders</th><th>Sales</th></tr></thead>
+                                <tbody id="rep-types"></tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- WEATHER -->
+            <section class="view hidden" id="weather-section">
+                <article class="panel narrow">
+                    <h2>Weather for flower care</h2>
+                    <div class="weather-search">
+                        <div>
+                            <label for="weather-city">City</label>
+                            <input type="text" id="weather-city" value="Lucena" placeholder="Enter city name" required>
+                        </div>
+                        <button type="button" id="get-weather-button" class="btn-primary">Check weather</button>
+                    </div>
+
+                    <div id="weather-message" role="status" aria-live="polite" class="muted"></div>
+
+                    <div id="weather-result" class="weather-card hidden">
+                        <h3 id="weather-location"></h3>
+                        <div class="weather-main">
+                            <img id="weather-icon" src="" alt="Weather condition">
+                            <p id="weather-temperature"></p>
+                        </div>
+                        <p id="weather-condition"></p>
+                        <p id="weather-humidity"></p>
+                        <p id="weather-wind"></p>
+
+                        <div class="flower-tip">
+                            <h3>Flower care tip</h3>
+                            <p id="weather-tip"></p>
+                        </div>
+
+                        <p class="weather-attribution">
+                            Weather data provided by
+                            <a href="https://www.weatherapi.com/" target="_blank" rel="noopener noreferrer">WeatherAPI.com</a>
+                        </p>
+                    </div>
+                </article>
+            </section>
+
+            <footer class="foot">&copy; 2026 Petal Haven Flower Shop</footer>
+        </div>
+    </div>
+
+    <dialog id="order-dialog" class="pop" aria-labelledby="od-title">
+        <div class="od-icon" aria-hidden="true">&#10003;</div>
+        <h2 id="od-title">Order added</h2>
+        <p class="muted" id="od-sub"></p>
+        <dl class="od-list" id="od-list"></dl>
+        <div class="btn-row od-actions">
+            <button type="button" class="btn-primary" id="od-view">View order</button>
+            <button type="button" class="btn-ghost" id="od-another">Add another</button>
+        </div>
+    </dialog>
+
+    <dialog id="customer-dialog" class="pop" aria-labelledby="cd-title">
+        <div class="od-icon" aria-hidden="true">&#10003;</div>
+        <h2 id="cd-title">Customer added</h2>
+        <p class="muted" id="cd-sub"></p>
+        <dl class="od-list" id="cd-list"></dl>
+        <div class="btn-row od-actions">
+            <button type="button" class="btn-primary" id="cd-view">View customer</button>
+            <button type="button" class="btn-ghost" id="cd-done">Done</button>
+        </div>
+    </dialog>
+
+    <script src="app.js"></script>
+</body>
+</html>
